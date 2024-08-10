@@ -19,8 +19,7 @@ const handleGenerateNewUrl = async (req, res) => {
     redirectUrl: formattedUrl,
     visitHistory: [{}],
   });
- return res.render("home" , {id : shortID})
-  // return res.json({ id: shortID });
+  return res.render("home", { id: shortID });
 };
 
 module.exports = { handleGenerateNewUrl };

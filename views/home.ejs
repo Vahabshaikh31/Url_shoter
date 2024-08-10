@@ -1,113 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>URL Shortener</title>
+        <style>
         /* Basic reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    font-family: 'Roboto', sans-serif;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-}
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            overflow-y: auto;
+        }
 
-h1 {
-    font-size: 3rem;
-    color: #00e6e6;
-    text-align: center;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 0 0 15px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6;
-}
+        h1 {
+            font-size: 3rem;
+            color: #00e6e6;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6;
+        }
 
-div {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 230, 230, 0.5), 0 0 25px rgba(0, 230, 230, 0.3);
-    width: 400px;
-    text-align: center;
-}
+        div {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 230, 230, 0.5), 0 0 25px rgba(0, 230, 230, 0.3);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
 
-p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    background: rgba(0, 230, 230, 0.1);
-    padding: 10px;
-    border-radius: 5px;
-    text-shadow: 0 0 10px #00e6e6, 0 0 15px #00e6e6;
-}
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            background: rgba(0, 230, 230, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
 
-label {
-    font-size: 1.2rem;
-    color: #00e6e6;
-    display: block;
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px #00e6e6, 0 0 15px #00e6e6;
-}
+        label {
+            font-size: 1.2rem;
+            color: #00e6e6;
+            display: block;
+            margin-bottom: 10px;
+            text-align: left;
+        }
 
-input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    font-size: 1rem;
-    margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-    text-shadow: 0 0 10px #00e6e6, 0 0 15px #00e6e6;
-}
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            outline: none;
+        }
 
-input[type="text"]::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background: #00e6e6;
-    border: none;
-    border-radius: 5px;
-    color: #0f2027;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    text-transform: uppercase;
-    box-shadow: 0 0 15px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6;
-}
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00e6e6;
+            border: none;
+            border-radius: 5px;
+            color: #0f2027;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            text-transform: uppercase;
+            outline: none;
+        }
 
-button:hover {
-    background: #00cccc;
-}
+        button:hover {
+            background: #00cccc;
+            transform: scale(1.05);
+        }
 
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #00e6e6;
+            text-align: left;
+            font-size: 1rem;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #00e6e6;
+        }
+
+        td {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            text-align: center;
+        }
+
+        tr:nth-child(even) td {
+            background-color: rgba(0, 230, 230, 0.1);
+        }
+
+        tr:hover td {
+            background-color: rgba(0, 230, 230, 0.2);
+        }
+
+        /* Responsive design */
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            div {
+                padding: 20px;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+        }
     </style>
-</head>
-<body>
-    <h1>URL Shortener</h1>
-    <div>
-        <% if(locals.id) {%>
-             <p>url Genrated : http://localhost:8000/<%= id %> </p>
-        <% } %>
-       
-        <form method="POST" action="/api/url">
-            <label for="">Enter Original URL </label>
-            <input type="text" name="url" placeholder="www.example.com">
-            <button type="submit">Generate</button>
-        </form>
-    </div>
-</body>
+    </head>
+
+    <body>
+        <div>
+            <h1>URL Shortener</h1>
+            <% if (locals.id) { %>
+            <p>URL Generated: <strong>http://localhost:8000/<%= id
+                    %></strong></p>
+            <% } %>
+
+            <form method="POST" action="/api/url">
+                <label for="url">Enter Original URL</label>
+                <input type="text" id="url" name="url"
+                    placeholder="www.example.com" required>
+                <button type="submit">Generate</button>
+            </form>
+        </div>
+        <div>
+            <% if (locals.urls) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>S. No</th>
+                        <th>Short Id</th>
+                        <th>Redirect URL</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% urls.forEach((url, index)=> { %>
+                    <tr>
+                        <td>
+                            <%= index + 1 %>
+                        </td>
+                        <td>
+                            <%= url.shortId %>
+                        </td>
+                        <td>
+                            <%= url.redirectUrl %>
+                        </td>
+                        <td>
+                            <%= url.visitHistory.length %>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+
+        </div>
+    </body>
+
 </html>
