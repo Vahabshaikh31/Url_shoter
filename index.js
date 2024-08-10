@@ -4,18 +4,21 @@ const port = 8000;
 const database = require("./connector");
 const URLroute = require("./routers/urlRoutes");
 const userRouter = require("./routers/userRouter");
-const staticRouters = require("./routers/staticRouteers"); // Corrected variable name
+const staticRouters = require("./routers/staticRouteers");
+const cookieParser = require("cookie-parser");
 const URL = require("./module/url");
 const path = require("path");
+const { restrictToLoggedUserOnly, checkAuth } = require("./middleware/auth");
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // Route Handlers
-app.use("/api/url", URLroute);
+app.use("/api/url", restrictToLoggedUserOnly, URLroute);
 app.use("/user", userRouter);
-app.use("/", staticRouters);
+app.use("/", checkAuth, staticRouters);
 
 // Set up EJS for templating
 app.set("view engine", "ejs");
@@ -28,21 +31,19 @@ app.get("/:shortId", async (req, res) => {
     const entry = await URL.findOneAndUpdate(
       { shortId },
       {
-        $push: {
-          visitHistory: { timestamp: Date.now() },
-        },
+        $push: { visitHistory: { timestamp: Date.now() } },
       },
       { new: true }
     );
 
     if (entry) {
-      res.redirect(entry.redirectUrl);
+      return res.redirect(entry.redirectUrl);
     } else {
-      res.status(404).send("Short URL not found");
+      return res.status(404).send("Short URL not found");
     }
   } catch (error) {
     console.error("Error during redirect:", error);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).send("Internal Server Error");
   }
 });
 

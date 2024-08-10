@@ -4,11 +4,16 @@ function setUser(id, user) {
   sessionIdToUserMap.set(id, user);
 }
 
-function getUser(id, user) {
+function getUser(id) {
   return sessionIdToUserMap.get(id);
+}
+
+function deleteUser(id) {
+  sessionIdToUserMap.delete(id);
 }
 
 module.exports = {
   setUser,
   getUser,
+  deleteUser,
 };

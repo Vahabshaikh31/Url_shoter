@@ -4,7 +4,7 @@ const shortid = require("shortid");
 
 const handleGenerateNewUrl = async (req, res) => {
   const { url } = req.body;
-  if (!url) return res.status(400).json({ error: "Url is required" });
+  if (!url) return res.status(400).json({ error: "URL is required" });
 
   // Ensure the URL includes the protocol
   const formattedUrl =
@@ -14,11 +14,15 @@ const handleGenerateNewUrl = async (req, res) => {
 
   const shortID = shortid.generate();
 
+  
   await URL.create({
     shortId: shortID,
     redirectUrl: formattedUrl,
     visitHistory: [{}],
+    // createdBy: req.user._id,
   });
+  console.log(req.users);
+
   return res.render("home", { id: shortID });
 };
 
