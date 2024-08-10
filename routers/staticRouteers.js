@@ -6,12 +6,20 @@ router.get("/", async (req, res) => {
   try {
     const allurls = await URL.find({}); // Fetch all URLs from the database
     return res.render("home", {
-      urls: allurls, 
+      urls: allurls,
     });
   } catch (error) {
     console.error("Error fetching URLs:", error);
     return res.status(500).send("Internal Server Error");
   }
 });
+
+router.get("/signup", (req, res) => {
+  return res.render("signup");
+});
+router.get("/login", (req, res) => {
+  return res.render("login");
+});
+
 
 module.exports = router;

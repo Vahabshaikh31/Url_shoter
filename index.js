@@ -3,6 +3,7 @@ const app = express();
 const port = 8000;
 const database = require("./connector");
 const URLroute = require("./routers/urlRoutes");
+const userRouter = require("./routers/userRouter");
 const staticRouters = require("./routers/staticRouteers"); // Corrected variable name
 const URL = require("./module/url");
 const path = require("path");
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Route Handlers
 app.use("/api/url", URLroute);
+app.use("/user", userRouter);
 app.use("/", staticRouters);
 
 // Set up EJS for templating
