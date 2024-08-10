@@ -1,56 +1,48 @@
 const express = require("express");
-const app = express();
-const port = 8000;
-const database = require("./connector");
-const URLroute = require("./routers/urlRoutes");
-const userRouter = require("./routers/userRouter");
-const staticRouters = require("./routers/staticRouteers");
-const cookieParser = require("cookie-parser");
-const URL = require("./module/url");
 const path = require("path");
-const { restrictToLoggedUserOnly, checkAuth } = require("./middleware/auth");
+const cookieParser = require("cookie-parser");
+const { connectToMongoDB } = require("./connect");
+const { restrictToLoggedinUserOnly, checkAuth } = require("./middlewares/auth");
+const URL = require("./models/url");
 
-// Middleware to parse JSON and URL-encoded data
+const urlRoute = require("./routes/url");
+const staticRoute = require("./routes/staticRouter");
+const userRoute = require("./routes/user");
+
+const app = express();
+const PORT = 8000;
+
+connectToMongoDB(
+  process.env.MONGODB ??
+    "mongodb+srv://vahabs:Svahab3101@cluster0.jb9arqn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+).then(() => console.log("Mongodb connected"));
+
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Route Handlers
-app.use("/api/url", restrictToLoggedUserOnly, URLroute);
-app.use("/user", userRouter);
-app.use("/", checkAuth, staticRouters);
+app.use("/url", restrictToLoggedinUserOnly, urlRoute);
+app.use("/user", userRoute);
+app.use("/", checkAuth, staticRoute);
 
-// Set up EJS for templating
-app.set("view engine", "ejs");
-app.set("views", path.resolve("./views"));
-
-// Route for handling short URL redirection
-app.get("/:shortId", async (req, res) => {
-  try {
-    const shortId = req.params.shortId;
-    const entry = await URL.findOneAndUpdate(
-      { shortId },
-      {
-        $push: { visitHistory: { timestamp: Date.now() } },
+app.get("/url/:shortId", async (req, res) => {
+  const shortId = req.params.shortId;
+  const entry = await URL.findOneAndUpdate(
+    {
+      shortId,
+    },
+    {
+      $push: {
+        visitHistory: {
+          timestamp: Date.now(),
+        },
       },
-      { new: true }
-    );
-
-    if (entry) {
-      return res.redirect(entry.redirectUrl);
-    } else {
-      return res.status(404).send("Short URL not found");
     }
-  } catch (error) {
-    console.error("Error during redirect:", error);
-    return res.status(500).send("Internal Server Error");
-  }
+  );
+  res.redirect(entry.redirectURL);
 });
 
-database()
-  .then(() => {
-    app.listen(port, () => console.log(`App listening on port ${port}!`));
-  })
-  .catch((err) => {
-    console.error("Database connection error:", err);
-  });
+app.listen(PORT, () => console.log(`Server Started at PORT:${PORT}`));

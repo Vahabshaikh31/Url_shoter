@@ -1,199 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #1e1e2f;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>URL Shortener</title>
-        <style>
-        /* Basic reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      h1 {
+        color: #00bcd4;
+        margin-bottom: 20px;
+        font-size: 2.5em;
+        text-align: center;
+      }
 
-        body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            font-family: 'Roboto', sans-serif;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
-            overflow-y: auto;
-        }
+      p {
+        color: #9e9e9e;
+        font-size: 1.1em;
+        margin-bottom: 20px;
+      }
 
-        h1 {
-            font-size: 3rem;
-            color: #00e6e6;
-            text-align: center;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px #00e6e6, 0 0 20px #00e6e6, 0 0 30px #00e6e6;
-        }
+      form {
+        background: #2a2a3b;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
 
-        div {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 230, 230, 0.5), 0 0 25px rgba(0, 230, 230, 0.3);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-        }
+      label {
+        color: #b0bec5;
+        font-size: 1.1em;
+      }
 
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            background: rgba(0, 230, 230, 0.1);
-            padding: 10px;
-            border-radius: 5px;
-        }
+      input[type="text"] {
+        padding: 10px;
+        border: 1px solid #00bcd4;
+        border-radius: 5px;
+        background: #1e1e2f;
+        color: #e0e0e0;
+        font-size: 1em;
+        outline: none;
+        transition: border-color 0.3s;
+      }
 
-        label {
-            font-size: 1.2rem;
-            color: #00e6e6;
-            display: block;
-            margin-bottom: 10px;
-            text-align: left;
-        }
+      input[type="text"]:focus {
+        border-color: #03a9f4;
+      }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            outline: none;
-        }
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #00bcd4;
+        color: #ffffff;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
 
-        input[type="text"]::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+      button:hover {
+        background: #03a9f4;
+      }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background: #00e6e6;
-            border: none;
-            border-radius: 5px;
-            color: #0f2027;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-            text-transform: uppercase;
-            outline: none;
-        }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #2a2a3b;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
 
-        button:hover {
-            background: #00cccc;
-            transform: scale(1.05);
-        }
+      th, td {
+        padding: 10px;
+        text-align: left;
+        color: #e0e0e0;
+      }
 
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
+      th {
+        background: #00bcd4;
+        color: #ffffff;
+      }
 
-        th,
-        td {
-            padding: 10px;
-            border: 1px solid #00e6e6;
-            text-align: left;
-            font-size: 1rem;
-        }
+      tr:nth-child(even) {
+        background: #1e1e2f;
+      }
 
-        th {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #00e6e6;
-        }
-
-        td {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            text-align: center;
-        }
-
-        tr:nth-child(even) td {
-            background-color: rgba(0, 230, 230, 0.1);
-        }
-
-        tr:hover td {
-            background-color: rgba(0, 230, 230, 0.2);
-        }
-
-        /* Responsive design */
-        @media (max-width: 500px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            div {
-                padding: 20px;
-            }
-
-            table {
-                font-size: 0.9rem;
-            }
-        }
+      tr:hover {
+        background: #2a2a3b;
+      }
     </style>
-    </head>
+  </head>
+  <body>
+    <h1>URL Shortener</h1>
+    <% if (locals.id) { %>
+    <p>URL Generated: http://localhost:8000/url/<%= id %></p>
+    <% } %>
 
-    <body>
-        <div>
-            <h1>URL Shortener</h1>
-            <% if (locals.id) { %>
-            <p>URL Generated: <strong>http://localhost:8000/<%= id
-                    %></strong></p>
-            <% } %>
-
-            <form method="POST" action="/api/url">
-                <label for="url">Enter Original URL</label>
-                <input type="text" id="url" name="url"
-                    placeholder="www.example.com" required>
-                <button type="submit">Generate</button>
-            </form>
-        </div>
-        <div>
-            <% if (locals.urls) { %>
-            <table>
-                <thead>
-                    <tr>
-                        <th>S. No</th>
-                        <th>Short Id</th>
-                        <th>Redirect URL</th>
-                        <th>Clicks</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% urls.forEach((url, index)=> { %>
-                    <tr>
-                        <td>
-                            <%= index + 1 %>
-                        </td>
-                        <td>
-                            <%= url.shortId %>
-                        </td>
-                        <td>
-                            <%= url.redirectUrl %>
-                        </td>
-                        <td>
-                            <%= url.visitHistory.length %>
-                        </td>
-                    </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-            <% } %>
-
-        </div>
-    </body>
-
+    <div>
+      <form method="POST" action="/url">
+        <label>Enter Your Original URL</label>
+        <input type="text" name="url" placeholder="https://example.com" />
+        <button type="submit">Generate</button>
+      </form>
+    </div>
+    <div style="margin-top: 30px">
+      <% if (locals.urls) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>S. No</th>
+            <th>ShortID</th>
+            <th>Redirect</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach((url, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= url.shortId %></td>
+            <td><%= url.redirectURL %></td>
+            <td><%= url.visitHistory.length %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
+    </div>
+  </body>
 </html>

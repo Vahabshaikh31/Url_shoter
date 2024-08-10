@@ -1,21 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>signup</title>
-    </head>
-    <body>
-        <h1>sign up</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #1e1e2f;
+        color: #e0e0e0;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
 
-        <form action="/user" method="post">
-            <label for>Full name </label>
-            <input type="text" required name="name"> <br>
-            <label for>email </label>
-            <input type="text" required name="email"><br>
-            <label for>password</label>
-            <input type="text" required name="password"><br>
-            <button type="submit">sign Up</button>
-        </form>
-    </body>
+      h1 {
+        color: #00bcd4;
+        margin-bottom: 20px;
+        font-size: 2.5em;
+      }
+
+      form {
+        background: #2a2a3b;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      label {
+        color: #b0bec5;
+        font-size: 1.1em;
+      }
+
+      input[type="text"], input[type="email"], input[type="password"] {
+        padding: 10px;
+        border: 1px solid #00bcd4;
+        border-radius: 5px;
+        background: #1e1e2f;
+        color: #e0e0e0;
+        font-size: 1em;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+        border-color: #03a9f4;
+      }
+
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #00bcd4;
+        color: #ffffff;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      button:hover {
+        background: #03a9f4;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Signup</h1>
+    <form action="/user" method="post">
+      <label>Full Name</label>
+      <input type="text" required name="name" placeholder="John Doe" />
+      <label>Email</label>
+      <input type="email" required name="email" placeholder="you@example.com" />
+      <label>Password</label>
+      <input type="password" required name="password" placeholder="********" />
+      <button type="submit">Signup</button>
+    </form>
+  </body>
 </html>
