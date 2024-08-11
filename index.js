@@ -10,7 +10,7 @@ const staticRoute = require("./routes/staticRouter");
 const userRoute = require("./routes/user");
 
 const app = express();
-const PORT = 8000;
+const PORT = 10000;
 
 connectToMongoDB(
   process.env.MONGODB ??
