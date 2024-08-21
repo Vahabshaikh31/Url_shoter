@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv"); // Load dotenv
 const { connectToMongoDB } = require("./connect");
 const { restrictToLoggedinUserOnly, checkAuth } = require("./middlewares/auth");
 const URL = require("./models/url");
@@ -9,13 +10,14 @@ const urlRoute = require("./routes/url");
 const staticRoute = require("./routes/staticRouter");
 const userRoute = require("./routes/user");
 
-const app = express();
-const PORT = 10000;
+dotenv.config(); // Correctly load environment variables
 
-connectToMongoDB(
-  process.env.MONGODB ??
-    "mongodb+srv://vahabs:Svahab3101@cluster0.jb9arqn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-).then(() => console.log("Mongodb connected"));
+const app = express();
+const PORT = process.env.PORT || 8000;
+
+connectToMongoDB(process.env.MONGODB).then(() =>
+  console.log("Mongodb connected")
+);
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
